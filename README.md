@@ -159,26 +159,28 @@ curl svc-nginx:81
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wait-for-svc
+  name: nginx
+  labels:
+    app: nginx
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: wait-nginx
+      app: nginx
   template:
     metadata:
       labels:
-        app: wait-nginx
+        app: nginx
     spec:
-      initContainers:
-      - name: wait-service
-        image: busybox
-        command: ['sh', '-c', 'until nslookup svc-nginx; do echo waiting for svc-nginx; sleep 2; done']
       containers:
-      - name: nginx
-        image: nginx:1.21
-        ports:
-        - containerPort: 80
+        - name: nginx
+          image: nginx:1.21
+          ports:
+          - containerPort: 80
+      initContainers:
+        - name: init-myservice
+          image: busybox
+          command: [ 'sh', '-c', "until nslookup svc-nginx.$(cat /var/run/secrets/kubernetes.io/serviceaccount/namespace).svc.cluster.local; do echo waiting for myservice; sleep 2; done"]
 ```
 
 Пробуем запустить и проверить запустится ли Pod:
@@ -191,4 +193,34 @@ sudo kubectl apply -f deployment1.yaml
 sudo kubectl get pods
 ```
 
+2. Видим, что nginx не стартует:
+
 <img src = "img/06.png" width = 100%>
+
+3. Создаем манифест сервиса **service1.yaml** и применяем его:
+
+```
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-nginx
+spec:
+  selector:
+    app: nginx
+  ports:
+    - port: 80
+      targetPort: 80
+```
+
+```
+sudo kubectl apply -f service1.yaml
+```
+
+```
+sudo kubectl get svc
+```
+
+<img src = "img/07.png" width = 100%>
+
+
+
