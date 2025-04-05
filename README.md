@@ -153,3 +153,42 @@ curl svc-nginx:81
 
 ### Ответ:
 
+1. Создаем Deployment приложения nginx:
+
+```
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: wait-for-svc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: wait-nginx
+  template:
+    metadata:
+      labels:
+        app: wait-nginx
+    spec:
+      initContainers:
+      - name: wait-service
+        image: busybox
+        command: ['sh', '-c', 'until nslookup svc-nginx; do echo waiting for svc-nginx; sleep 2; done']
+      containers:
+      - name: nginx
+        image: nginx:1.21
+        ports:
+        - containerPort: 80
+```
+
+Пробуем запустить и проверить запустится ли Pod:
+
+```
+sudo kubectl apply -f deployment1.yaml
+```
+
+```
+sudo kubectl get pods
+```
+
+<img src = "img/06.png" width = 100%>
