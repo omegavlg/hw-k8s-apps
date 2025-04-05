@@ -115,20 +115,33 @@ spec:
     command: ["sleep", "3600"]
 ```
 
+```
+sudo kubectl apply -f mt-pod.yaml
+```
+
+Проверяем, создался ли под:
+
+```
+sudo kubectl get pods
+```
+
 <img src = "img/04.png" width = 100%>
 
+Проверяем, что из пода есть доступ до приложений:
 
+```
+sudo kubectl exec -it mt-pod -- /bin/bash
+```
 
+```
+curl svc-nginx:80
+```
 
-
+```
+curl svc-nginx:81
+```
 
 <img src = "img/05.png" width = 100%>
-
-
-
-
-
-
 
 ---
 ## Задание 2. Создать Deployment и обеспечить старт основного контейнера при выполнении условий
