@@ -11,7 +11,7 @@
 
 ### Ответ:
 
-1. Создаем манифест и применяем его:
+1. Создаем манифест **deployment.yaml** и применяем его:
 
 ```
 apiVersion: apps/v1
@@ -69,7 +69,7 @@ sudo kubectl get pods
 
 <img src = "img/02.png" width = 100%>
 
-3. Создаем сервис, который обеспечит доступ до реплик приложений и применяем его:
+3. Создаем сервис **service.yaml**, который обеспечит доступ до реплик приложений и применяем его:
 
 ```
 apiVersion: v1
@@ -101,7 +101,7 @@ sudo kubectl get svc
 <img src = "img/03.png" width = 100%>
 
 
-4. Создаем отдельный Pod с приложением multitool:
+4. Создаем отдельный Pod **mt-pod.yaml** с приложением multitool, запускаем и проверяем:
 
 ```
 apiVersion: v1
@@ -114,6 +114,16 @@ spec:
     image: wbitt/network-multitool
     command: ["sleep", "3600"]
 ```
+
+<img src = "img/04.png" width = 100%>
+
+
+
+
+
+
+<img src = "img/05.png" width = 100%>
+
 
 
 

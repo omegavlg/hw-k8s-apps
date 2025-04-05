@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mt-pod
+spec:
+  containers:
+  - name: multitool
+    image: wbitt/network-multitool
+    command: ["sleep", "3600"]
