@@ -11,4 +11,4 @@ spec:
       protocol: TCP
       port: 81
   selector:
-    app: nginx
+    app: my-app

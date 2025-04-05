@@ -85,7 +85,7 @@ spec:
       protocol: TCP
       port: 81
   selector:
-    app: nginx
+    app: my-app
 ```
 
 ```
@@ -103,8 +103,17 @@ sudo kubectl get svc
 
 4. Создаем отдельный Pod с приложением multitool:
 
-
-
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: multitool-test
+spec:
+  containers:
+  - name: multitool
+    image: wbitt/network-multitool
+    command: ["sleep", "3600"]
+```
 
 
 
