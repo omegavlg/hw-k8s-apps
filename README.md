@@ -223,4 +223,10 @@ sudo kubectl get svc
 <img src = "img/07.png" width = 100%>
 
 
+4. Проверяем, что под запустился:
 
+```
+sudo kubectl get pods
+```
+
+<img src = "img/08.png" width = 100%>
